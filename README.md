@@ -1,4 +1,4 @@
-# Hybrid Cloud Enterprise Infrastructure Automation
+# Hybrid Cloud Infrastructure Automation
 
 ## 📌 Project Overview
 This repository documents the end-to-end implementation of a Hybrid Cloud DevOps architecture. The objective is to transition from manual, legacy provisioning to a fully automated, scalable, and resilient Infrastructure as Code (IaC) environment. 
