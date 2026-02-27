@@ -6,7 +6,40 @@ This repository documents the end-to-end implementation of a Hybrid Cloud DevOps
 The architecture bridges an **On-Premise Control Plane** (handling source code management, CI/CD pipelines, and observability) with an **AWS Public Cloud Data Plane** (handling workloads and application deployments).
 
 ## 🏗️ Architecture Design
-*[Placeholder: Insert your Architecture Diagram here - e.g., draw.io or Excalidraw export]*
+graph TD
+    subgraph "Developer Workstation (Laptop Lu)"
+        TF[Terraform CLI]
+        GIT[Git CLI]
+    end
+
+    subgraph "On-Premise Environment (Proxmox)"
+        GL[GitLab CE Server \n Code Repository]
+        GR[GitLab Runner \n Docker Executor]
+        
+        GL <--> |CI/CD Trigger| GR
+    end
+
+    subgraph "AWS Public Cloud (Provisioned by Terraform)"
+        subgraph "VPC"
+            IGW[Internet Gateway]
+            
+            subgraph "Public Subnet"
+                ALB[Application Load Balancer / NAT]
+            end
+            
+            subgraph "Private Subnet"
+                EC2[EC2 Worker Nodes \n Microservices App]
+            end
+            
+            IGW --- ALB
+            ALB --- EC2
+        end
+    end
+
+    %% Workflows
+    GIT -- "1. Push Code" --> GL
+    TF -- "2. Provision Infrastructure" --> IGW
+    GR -- "3. Build & Deploy via SSH/API" --> EC2
 
 **Control Plane (On-Premise / Proxmox):**
 * **GitLab CE:** Self-hosted Source Code Management (SCM) and CI/CD orchestrator.
