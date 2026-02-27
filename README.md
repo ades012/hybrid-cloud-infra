@@ -9,39 +9,41 @@ The architecture bridges an **On-Premise Control Plane** (handling source code m
 
 ```mermaid
 graph TD
-    subgraph "Developer Workstation (Laptop Lu)"
+    subgraph Laptop ["Developer Laptop"]
         TF[Terraform CLI]
         GIT[Git CLI]
     end
 
-    subgraph "On-Premise Environment (Proxmox)"
-        GL[GitLab CE Server]
-        GR[GitLab Runner]
-        
-        GL <--> |CI/CD Trigger| GR
+    subgraph Proxmox ["On-Premise (Proxmox)"]
+        GL[GitLab CE]
+        GR[GitLab Runner<br/>Docker Executor]
+        GL <--> |CI/CD Webhooks| GR
     end
 
-    subgraph "AWS Public Cloud (Provisioned by Terraform)"
-        subgraph "VPC"
+    subgraph AWS ["AWS Cloud Environment"]
+        subgraph VPC ["AWS VPC (10.0.0.0/16)"]
             IGW[Internet Gateway]
             
-            subgraph "Public Subnet"
-                ALB[Application Load Balancer / NAT]
+            subgraph Public ["Public Subnet"]
+                ALB[App Load Balancer]
+                NAT[NAT Gateway]
             end
             
-            subgraph "Private Subnet"
-                EC2[EC2 Worker Nodes \n Microservices App]
+            subgraph Private ["Private Subnet"]
+                EC2[EC2 Worker Nodes<br/>App Container]
             end
             
             IGW --- ALB
-            ALB --- EC2
+            IGW --- NAT
+            ALB == "HTTP/HTTPS Traffic" === EC2
+            EC2 -. "Outbound Internet" .-> NAT
         end
     end
 
     %% Workflows
-    GIT -- "1. Push Code" --> GL
-    TF -- "2. Provision Infrastructure" --> IGW
-    GR -- "3. Build & Deploy via SSH/API" --> EC2
+    GIT -- "1. Push Source Code" --> GL
+    TF -- "2. Provision via AWS API" --> VPC
+    GR -- "3. SSH / Remote Deploy" --> EC2
 ```
 
 **Control Plane (On-Premise / Proxmox):**
