@@ -67,9 +67,9 @@ graph TD
 ## 🚀 Project Roadmap & Sprints
 
 ### Sprint 1: Control Plane Foundation 🔄 *(In Progress)*
-- [ ] Provision On-Premise VM for Control Plane.
-- [ ] Install and configure self-hosted GitLab CE.
-- [ ] Deploy and register Docker-based GitLab Runners.
+- [x] Provision On-Premise VM for Control Plane.
+- [x] Install and configure self-hosted GitLab CE.
+- [x] Deploy and register Docker-based GitLab Runners.
 - [ ] Set up AWS IAM credentials for Terraform execution.
 
 ### Sprint 2: AWS Network & Compute Automation via IaC ⏳ *(Pending)*
