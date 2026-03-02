@@ -70,12 +70,12 @@ graph TD
 - [x] Provision On-Premise VM for Control Plane.
 - [x] Install and configure self-hosted GitLab CE.
 - [x] Deploy and register Docker-based GitLab Runners.
-- [ ] Set up AWS IAM credentials for Terraform execution.
+- [x] Set up AWS IAM credentials for Terraform execution.
 
 ### Sprint 2: AWS Network & Compute Automation via IaC ⏳ *(Pending)*
-- [ ] Initialize Terraform backend (S3 state management).
-- [ ] Write reusable Terraform modules for VPC, Subnets, and IGW.
-- [ ] Provision AWS EC2/EKS worker nodes via Terraform.
+- [x] Initialize Terraform backend (S3 state management).
+- [x] Write reusable Terraform modules for VPC, Subnets, and IGW.
+- [x] Provision AWS EC2/EKS worker nodes via Terraform.
 
 ### Sprint 3: CI/CD Pipeline Implementation ⏳ *(Pending)*
 - [ ] Containerize a dummy microservices application (`Dockerfile`).
